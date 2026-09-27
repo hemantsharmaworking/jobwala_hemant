@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobwala - Complete Job Portal & Interview Preparation Platform</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ==============================================
+       NAVBAR
+  ============================================== -->
+  <header class="navbar">
+    <div class="nav-brand" onclick="document.querySelector('[data-target=jobsSection]').click()">
+      <div class="brand-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div>
+        <div class="brand-title">Jobwala</div>
+        <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500;">Career & Prep Hub</div>
+      </div>
+      <span class="brand-badge">PRO</span>
+    </div>
+
+    <nav>
+      <ul class="nav-links">
+        <li>
+          <a class="nav-item active" data-target="jobsSection">
+            <i class="fa-solid fa-briefcase"></i> Job Portal
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-target="prepSection">
+            <i class="fa-solid fa-book-open"></i> Prep Hub
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-target="dsaSection">
+            <i class="fa-solid fa-code"></i> DSA Sheet
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-target="companiesSection">
+            <i class="fa-solid fa-building"></i> Companies Hiring
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-target="dashboardSection">
+            <i class="fa-solid fa-chart-pie"></i> My Dashboard
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <!-- Subscription Option at Top -->
+      <button class="btn-pro-sub" onclick="openModal('subscriptionModal')" title="Upgrade for exclusive placement drives & direct referrals">
+        <i class="fa-solid fa-crown"></i>
+        <span>Pro Opportunities</span>
+      </button>
+
+      <!-- Settings Icon Button (Includes Dark & Light Mode) -->
+      <button class="nav-icon-btn" onclick="openModal('settingsModal')" title="Settings & Appearance">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+
+      <!-- Google Sign In Button (When Logged Out) -->
+      <button class="btn-google" id="googleSignInNavBtn" onclick="openModal('googleAuthModal')">
+        <svg width="18" height="18" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Sign in with Google</span>
+      </button>
+
+      <!-- User Profile Dropdown (When Logged In) -->
+      <div class="user-menu-wrapper" id="userMenuWrapper" style="display: none;">
+        <button class="user-profile-btn" onclick="toggleUserDropdown()">
+          <img src="" id="userNavAvatar" class="user-avatar-img" alt="User Avatar">
+          <span class="user-name-text" id="userNavName">User</span>
+          <span class="user-pro-badge" id="userNavProBadge" style="display: none;">PRO</span>
+          <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted); margin-left: 2px;"></i>
+        </button>
+        <div class="user-dropdown-menu" id="userDropdownMenu">
+          <div class="dropdown-user-header">
+            <div class="dropdown-user-name" id="dropdownUserName">User Name</div>
+            <div class="dropdown-user-email" id="dropdownUserEmail">user@gmail.com</div>
+          </div>
+          <a class="dropdown-item" onclick="openModal('onboardingModal'); toggleUserDropdown();">
+            <i class="fa-regular fa-id-card" style="color: var(--primary);"></i> My Profile & CV
+          </a>
+          <a class="dropdown-item" onclick="document.querySelector('[data-target=dashboardSection]').click(); toggleUserDropdown();">
+            <i class="fa-solid fa-chart-pie" style="color: var(--success);"></i> My Dashboard
+          </a>
+          <a class="dropdown-item" onclick="openModal('subscriptionModal'); toggleUserDropdown();">
+            <i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Pro Opportunities
+          </a>
+          <a class="dropdown-item" onclick="openModal('settingsModal'); toggleUserDropdown();">
+            <i class="fa-solid fa-gear" style="color: var(--accent);"></i> Settings & Theme
+          </a>
+          <div style="border-top: 1px solid var(--border-color); margin: 0.35rem 0;"></div>
+          <a class="dropdown-item danger" onclick="signOut(); toggleUserDropdown();">
+            <i class="fa-solid fa-arrow-right-from-bracket" style="color: var(--danger);"></i> Sign Out
+          </a>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="postJobBtn">
+        <i class="fa-solid fa-plus"></i> Post a Job
+      </button>
+    </div>
+  </header>
+
+  <!-- ==============================================
+       MAIN APP CONTAINER
+  ============================================== -->
+  <main class="app-container">
+
+    <!-- HERO BANNER -->
+    <section class="hero-banner">
+      <div class="hero-content">
+        <h1>All-in-One Career & Placement Engine</h1>
+        <p>
+          Discover curated tech jobs, master high-yield Aptitude & CS fundamentals, conquer topic-wise DSA sheets, and crack company-specific hiring processes with syllabus & exam patterns.
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-pill">
+          <span class="stat-number">100+</span>
+          <span class="stat-label">DSA Sheet</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Companies Guide</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-number" id="heroSolvedCount">0</span>
+          <span class="stat-label">Problems Solved</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 1: JOB PORTAL
+    ========================================== -->
+    <section id="jobsSection" class="app-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 style="font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em;">Explore Opportunities</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Find software engineering, internship, and full-stack positions with verified CTCs.</p>
+        </div>
+      </div>
+
+      <!-- Filters Bar -->
+      <div class="filter-bar">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="jobSearchInput" class="search-input" placeholder="Search by title, company, skills (e.g. React, SDE)...">
+        </div>
+
+        <div class="filter-selects">
+          <select id="jobTypeFilter" class="filter-select">
+            <option value="All">All Job Types</option>
+            <option value="Full-time">Full-time</option>
+            <option value="Internship">Internship</option>
+            <option value="Remote">Remote</option>
+          </select>
+
+          <select id="jobCategoryFilter" class="filter-select">
+            <option value="All">All Roles</option>
+            <option value="SDE">Software Engineer (SDE)</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+            <option value="Fullstack">Fullstack</option>
+            <option value="DevOps">DevOps & Cloud</option>
+          </select>
+
+          <select id="jobExpFilter" class="filter-select">
+            <option value="All">All Experience</option>
+            <option value="Freshers">Freshers / 2024-2026 Batch</option>
+            <option value="0 - 2 yrs">0 - 2 yrs</option>
+            <option value="1 - 3 yrs">1 - 3 yrs</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Jobs Grid -->
+      <div class="jobs-grid" id="jobsGrid">
+        <!-- Rendered by jobs.js -->
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 2: PREPARATION HUB
+    ========================================== -->
+    <section id="prepSection" class="app-section" style="display: none;">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.6rem; font-weight: 800;">Comprehensive Preparation Hub</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Formula cheatsheets, core computer science subjects, HR behavioral interview frameworks, and timed quizzes.</p>
+      </div>
+
+      <!-- Subtabs -->
+      <div class="tab-pills">
+        <button class="tab-pill prep-subtab-pill active" data-target="aptitudeSubtab">
+          <i class="fa-solid fa-calculator"></i> Aptitude (Quant, Logical, Verbal)
+        </button>
+        <button class="tab-pill prep-subtab-pill" data-target="technicalSubtab">
+          <i class="fa-solid fa-microchip"></i> Core Technical (OS, DBMS, CN, OOP)
+        </button>
+        <button class="tab-pill prep-subtab-pill" data-target="hrSubtab">
+          <i class="fa-solid fa-user-tie"></i> HR Interview & STAR Method
+        </button>
+        <button class="tab-pill prep-subtab-pill" data-target="quizSubtab">
+          <i class="fa-solid fa-stopwatch"></i> Interactive Quiz Engine
+        </button>
+      </div>
+
+      <!-- Subtab 1: Aptitude -->
+      <div id="aptitudeSubtab" class="prep-subtab-content">
+        <div id="aptitudeContainer"></div>
+      </div>
+
+      <!-- Subtab 2: Technical Core -->
+      <div id="technicalSubtab" class="prep-subtab-content" style="display: none;">
+        <div id="technicalContainer"></div>
+      </div>
+
+      <!-- Subtab 3: HR Interview -->
+      <div id="hrSubtab" class="prep-subtab-content" style="display: none;">
+        <div id="hrContainer"></div>
+      </div>
+
+      <!-- Subtab 4: Interactive Quiz Engine -->
+      <div id="quizSubtab" class="prep-subtab-content" style="display: none;">
+        <div class="quiz-container">
+          <!-- Quiz Start View -->
+          <div id="quizStartView" style="text-align: center; padding: 2rem 1rem;">
+            <div style="width: 70px; height: 70px; background: var(--primary-light); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem auto;">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Placement Readiness Assessment</h3>
+            <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
+              Test your proficiency across Aptitude, Operating Systems, DBMS, Computer Networks, and Behavioral situations with immediate feedback and detailed explanations.
+            </p>
+            <button class="btn btn-primary" onclick="PrepModule.startQuiz()" style="padding: 0.75rem 2rem; font-size: 1rem;">
+              <i class="fa-solid fa-play"></i> Start Quiz (10 Questions)
+            </button>
+          </div>
+
+          <!-- Quiz Play View -->
+          <div id="quizPlayView" style="display: none;">
+            <div class="quiz-header">
+              <span id="quizQuestionCounter" style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">Question 1 of 10</span>
+              <span id="quizQuestionCategory" class="badge-difficulty badge-medium">General</span>
+            </div>
+
+            <div class="quiz-question-text" id="quizQuestionText"></div>
+
+            <div class="quiz-options" id="quizOptionsContainer"></div>
+
+            <div class="quiz-explanation-box" id="quizExplanationBox" style="display: none;"></div>
+
+            <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+              <button class="btn btn-primary" id="quizNextBtn" style="display: none;" onclick="PrepModule.nextQuizQuestion()">
+                Next Question <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quiz Result View -->
+          <div id="quizResultView" style="display: none; text-align: center; padding: 2rem 1rem;">
+            <div style="width: 70px; height: 70px; background: var(--success-light); color: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem auto;">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Quiz Completed!</h3>
+            <p id="quizFeedbackText" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
+
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem;">
+              <div class="stat-pill">
+                <span class="stat-number" id="quizScoreText">0 / 10</span>
+                <span class="stat-label">Final Score</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-number" id="quizPctText">0%</span>
+                <span class="stat-label">Accuracy</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-number" id="quizTimeText">0s</span>
+                <span class="stat-label">Time Taken</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="PrepModule.startQuiz()">
+              <i class="fa-solid fa-rotate-right"></i> Retake Assessment
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 3: DEDICATED DSA PREP SHEET
+    ========================================== -->
+    <section id="dsaSection" class="app-section" style="display: none;">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.6rem; font-weight: 800;">Dedicated DSA Topic-Wise Sheet</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Curated high-yield problems categorized by topic with difficulty levels, verified optimal solutions, multi-language code snippets, and progress tracking.</p>
+      </div>
+
+      <!-- DSA Overview Cards -->
+      <div class="dsa-overview">
+        <div class="dsa-metric-card">
+          <div class="dsa-metric-icon" style="background: var(--primary-light); color: var(--primary);">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <div style="flex: 1;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Overall Progress</div>
+            <div style="font-size: 1.3rem; font-weight: 800;" id="dsaTotalSolved">0 / 0</div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="dsaOverviewBar" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dsa-metric-card">
+          <div class="dsa-metric-icon" style="background: var(--success-light); color: var(--success);">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Easy Solved</div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--success);" id="dsaEasyCount">0/0</div>
+          </div>
+        </div>
+
+        <div class="dsa-metric-card">
+          <div class="dsa-metric-icon" style="background: var(--warning-light); color: var(--warning);">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Medium Solved</div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--warning);" id="dsaMedCount">0/0</div>
+          </div>
+        </div>
+
+        <div class="dsa-metric-card">
+          <div class="dsa-metric-icon" style="background: var(--danger-light); color: var(--danger);">
+            <i class="fa-solid fa-fire"></i>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Hard Solved</div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--danger);" id="dsaHardCount">0/0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DSA Filters -->
+      <div class="filter-bar">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="dsaSearchInput" class="search-input" placeholder="Search problems by name or company (e.g. Google, Trapping Rain)...">
+        </div>
+
+        <div class="filter-selects">
+          <select id="dsaTopicFilter" class="filter-select">
+            <option value="all">All Topics</option>
+          </select>
+
+          <select id="dsaDiffFilter" class="filter-select">
+            <option value="All">All Difficulties</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+
+          <select id="dsaStatusFilter" class="filter-select">
+            <option value="All">All Status</option>
+            <option value="Solved">Solved</option>
+            <option value="Unsolved">Unsolved</option>
+            <option value="Bookmarked">Bookmarked</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- DSA Accordion Problem List -->
+      <div id="dsaAccordionContainer">
+        <!-- Rendered by dsa.js -->
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 4: COMPANIES HIRING PROCESS
+    ========================================== -->
+    <section id="companiesSection" class="app-section" style="display: none;">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.6rem; font-weight: 800;">Companies Hiring Process & Syllabus</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Detailed recruitment breakdowns, online test patterns, syllabus, eligibility criteria, and past interview questions for top tech firms.</p>
+      </div>
+
+      <!-- Eligibility Checker Tool Card -->
+      <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.75rem; margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <i class="fa-solid fa-clipboard-check" style="color: var(--primary); font-size: 1.4rem;"></i>
+          <h3 style="font-size: 1.25rem; font-weight: 800;">Instant Company Eligibility Checker</h3>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+          Enter your academic scores and active backlogs to instantly calculate which companies you are eligible to apply for.
+        </p>
+
+        <form id="eligibilityCheckForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap: 1rem; align-items: flex-end;">
+          <div>
+            <label class="form-label">College CGPA (out of 10)</label>
+            <input type="number" id="checkCgpa" class="form-control" step="0.01" min="0" max="10" placeholder="e.g. 7.8" required>
+          </div>
+          <div>
+            <label class="form-label">10th Board Marks (%)</label>
+            <input type="number" id="check10th" class="form-control" step="0.1" min="0" max="100" placeholder="e.g. 85" required>
+          </div>
+          <div>
+            <label class="form-label">12th Board Marks (%)</label>
+            <input type="number" id="check12th" class="form-control" step="0.1" min="0" max="100" placeholder="e.g. 82" required>
+          </div>
+          <div>
+            <label class="form-label">Active Backlogs</label>
+            <input type="number" id="checkBacklogs" class="form-control" min="0" max="10" value="0" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="height: 42px;">
+            <i class="fa-solid fa-magnifying-glass"></i> Check Eligibility
+          </button>
+        </form>
+
+        <div id="eligibilityResults" style="display: none;"></div>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-bar">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="companySearchInput" class="search-input" placeholder="Search company by name (e.g. TCS, Amazon, Infosys, Goldman Sachs)...">
+        </div>
+
+        <div class="filter-selects">
+          <select id="companyTypeFilter" class="filter-select">
+            <option value="All">All Categories</option>
+            <option value="Product">Product / FAANG / FinTech</option>
+            <option value="Service">Service / IT Giants</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Companies Grid -->
+      <div class="companies-grid" id="companiesGrid">
+        <!-- Rendered by companies.js -->
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 5: MY DASHBOARD
+    ========================================== -->
+    <section id="dashboardSection" class="app-section" style="display: none;">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.6rem; font-weight: 800;">Candidate Placement Dashboard</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Track your placement readiness score, DSA milestones, applied jobs, and quiz history.</p>
+      </div>
+
+      <!-- Stats Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+        <div class="stat-pill" style="text-align: left; padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span class="stat-label">Readiness Score</span>
+            <i class="fa-solid fa-gauge-high" style="color: var(--primary);"></i>
+          </div>
+          <div class="stat-number" id="dashReadiness" style="font-size: 2rem;">0%</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Composite index based on DSA, Quizzes & Applications</p>
+        </div>
+
+        <div class="stat-pill" style="text-align: left; padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span class="stat-label">DSA Solved</span>
+            <i class="fa-solid fa-code" style="color: var(--success);"></i>
+          </div>
+          <div class="stat-number" id="dashSolvedDsa" style="font-size: 2rem; color: var(--success);">0</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Total algorithmic problems mastered</p>
+        </div>
+
+        <div class="stat-pill" style="text-align: left; padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span class="stat-label">Jobs Applied</span>
+            <i class="fa-solid fa-paper-plane" style="color: var(--accent);"></i>
+          </div>
+          <div class="stat-number" id="dashTotalApps" style="font-size: 2rem; color: var(--accent);">0</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Active applications tracked</p>
+        </div>
+
+        <div class="stat-pill" style="text-align: left; padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span class="stat-label">Quiz Accuracy</span>
+            <i class="fa-solid fa-trophy" style="color: var(--warning);"></i>
+          </div>
+          <div class="stat-number" id="dashQuizzes" style="font-size: 2rem; color: var(--warning);">0%</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Average accuracy in assessment quizzes</p>
+        </div>
+      </div>
+
+      <!-- Applied Jobs List -->
+      <div style="margin-bottom: 2rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">
+          <i class="fa-solid fa-list-check" style="color: var(--primary);"></i> My Submitted Job Applications
+        </h3>
+        <div id="myApplicationsContainer"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==============================================
+       MODALS
+  ============================================== -->
+
+  <!-- 1. Job Detail Modal -->
+  <div class="modal-overlay" id="jobDetailModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="jobDetailModalTitle">Job Details</h3>
+        <button class="modal-close-btn" onclick="closeModal('jobDetailModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="jobDetailModalBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('jobDetailModal')">Close</button>
+        <button class="btn btn-primary" id="jobDetailApplyBtn">Apply Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Apply Job Modal -->
+  <div class="modal-overlay" id="applyModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="applyModalTitle">Submit Application</h3>
+        <button class="modal-close-btn" onclick="closeModal('applyModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <form id="applyJobForm">
+        <div class="modal-body">
+          <input type="hidden" id="applyJobId">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="applicantName" class="form-control" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" id="applicantEmail" class="form-control" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" id="applicantPhone" class="form-control" placeholder="+91 9876543210">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Experience Level</label>
+            <select id="applicantExp" class="form-control">
+              <option value="Freshers (2024-2026 Batch)">Freshers (2024-2026 Batch)</option>
+              <option value="0 - 1 years">0 - 1 years</option>
+              <option value="1 - 3 years">1 - 3 years</option>
+              <option value="3+ years">3+ years</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Resume / Portfolio Link *</label>
+            <input type="url" id="applicantResume" class="form-control" placeholder="https://drive.google.com/your-resume or LinkedIn / GitHub" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Brief Note / Why are you a great fit?</label>
+            <textarea id="applicantNote" class="form-control" placeholder="Highlight your top projects, relevant skills, and enthusiasm..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('applyModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Application</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Post a Job Modal -->
+  <div class="modal-overlay" id="postJobModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Post a New Job Opportunity</h3>
+        <button class="modal-close-btn" onclick="closeModal('postJobModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <form id="postJobForm">
+        <div class="modal-body">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Job Title *</label>
+              <input type="text" id="postTitle" class="form-control" placeholder="e.g. SDE-1 (Backend)" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Company Name *</label>
+              <input type="text" id="postCompany" class="form-control" placeholder="e.g. Microsoft" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Location</label>
+              <input type="text" id="postLocation" class="form-control" placeholder="Bengaluru / Remote" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Job Type</label>
+              <select id="postType" class="form-control">
+                <option value="Full-time">Full-time</option>
+                <option value="Internship">Internship</option>
+                <option value="Remote">Remote</option>
+                <option value="Contract">Contract</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="postCategory" class="form-control">
+                <option value="SDE">SDE</option>
+                <option value="Frontend">Frontend</option>
+                <option value="Backend">Backend</option>
+                <option value="Fullstack">Fullstack</option>
+                <option value="DevOps">DevOps</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Salary / CTC</label>
+              <input type="text" id="postSalary" class="form-control" placeholder="e.g. ₹18 - 24 LPA" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Experience Required</label>
+              <input type="text" id="postExp" class="form-control" placeholder="e.g. Freshers / 0-2 yrs" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Skills & Tech Stack Tags (comma separated)</label>
+            <input type="text" id="postTags" class="form-control" placeholder="Python, Django, AWS, Docker">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Job Description *</label>
+            <textarea id="postDescription" class="form-control" placeholder="Describe the responsibilities and team mission..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Key Requirements (one bullet per line)</label>
+            <textarea id="postRequirements" class="form-control" placeholder="Strong knowledge of Data Structures&#10;B.Tech in CS/IT&#10;Hands-on REST API experience"></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Eligibility Criteria</label>
+              <input type="text" id="postEligibility" class="form-control" placeholder="7.0+ CGPA, 2024-2026 Batch">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Application Deadline</label>
+              <input type="date" id="postDeadline" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Direct Career Portal URL (Optional)</label>
+            <input type="url" id="postApplyUrl" class="form-control" placeholder="https://careers.company.com/job/123">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('postJobModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Post Job</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. DSA Solution Modal -->
+  <div class="modal-overlay" id="solutionModal">
+    <div class="modal-content" style="max-width: 850px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="solutionModalTitle">Optimal Solution</h3>
+        <button class="modal-close-btn" onclick="closeModal('solutionModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="solutionModalBody"></div>
+    </div>
+  </div>
+
+  <!-- 5. DSA Personal Notes Modal -->
+  <div class="modal-overlay" id="notesModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="notesModalTitle">Personal Notes</h3>
+        <button class="modal-close-btn" onclick="closeModal('notesModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="notesProblemId">
+        <div class="form-group">
+          <label class="form-label">Key Takeaways & Intuition</label>
+          <textarea id="problemNotesText" class="form-control" style="min-height: 120px;" placeholder="Write your thought process, edge cases to remember, or key tricks..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">My Code Snippet / Custom Solution</label>
+          <textarea id="problemCodeText" class="form-control" style="font-family: monospace; min-height: 160px;" placeholder="// Paste your working solution here..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('notesModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="DsaModule.saveProblemNotes()">Save Notes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Company Hiring Detail Modal -->
+  <div class="modal-overlay" id="companyDetailModal">
+    <div class="modal-content" style="max-width: 900px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="companyDetailModalTitle">Company Hiring Guide</h3>
+        <button class="modal-close-btn" onclick="closeModal('companyDetailModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="companyDetailModalBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeModal('companyDetailModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Google Gmail Sign-In Modal -->
+  <div class="modal-overlay" id="googleAuthModal">
+    <div class="modal-content" style="max-width: 480px; border-radius: 20px;">
+      <div class="modal-header" style="border-bottom: none; padding-bottom: 0.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span style="font-weight: 700; font-size: 1.1rem;">Sign in with Google</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('googleAuthModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body" style="padding-top: 0.5rem;">
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Choose an account to continue to <strong>Jobwala</strong>. We will use your Google profile to set up your placement application profile.
+        </p>
+
+        <!-- Quick 1-Click Google Accounts -->
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+          <div class="theme-card-option" style="padding: 0.75rem 1rem; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;"
+               onclick="handleGoogleLogin('Hemant Sharma', 'hemant.sharma@gmail.com', 'https://ui-avatars.com/api/?name=Hemant+Sharma&background=3b82f6&color=fff')">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <img src="https://ui-avatars.com/api/?name=Hemant+Sharma&background=3b82f6&color=fff" style="width: 38px; height: 38px; border-radius: 50%;">
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">Hemant Sharma</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">hemant.sharma@gmail.com</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-angle-right" style="color: var(--text-muted);"></i>
+          </div>
+
+          <div class="theme-card-option" style="padding: 0.75rem 1rem; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;"
+               onclick="handleGoogleLogin('Job Aspirant', 'aspirant.tech@gmail.com', 'https://ui-avatars.com/api/?name=Job+Aspirant&background=10b981&color=fff')">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <img src="https://ui-avatars.com/api/?name=Job+Aspirant&background=10b981&color=fff" style="width: 38px; height: 38px; border-radius: 50%;">
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">Job Aspirant</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">aspirant.tech@gmail.com</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-angle-right" style="color: var(--text-muted);"></i>
+          </div>
+        </div>
+
+        <div style="position: relative; text-align: center; margin: 1.5rem 0;">
+          <hr style="border: none; border-top: 1px solid var(--border-color);">
+          <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg-card); padding: 0 10px; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">or use another Gmail</span>
+        </div>
+
+        <!-- Custom Gmail input form -->
+        <form id="customGoogleAuthForm" onsubmit="handleCustomGoogleLogin(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="customAuthName" class="form-control" placeholder="e.g. Rahul Verma" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gmail Address</label>
+            <input type="email" id="customAuthEmail" class="form-control" placeholder="e.g. rahul.verma@gmail.com" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.95rem;">
+            <i class="fa-brands fa-google"></i> Continue with this Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Candidate Profile & Onboarding Modal -->
+  <div class="modal-overlay" id="onboardingModal">
+    <div class="modal-content" style="max-width: 780px;">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" style="display: flex; align-items: center; gap: 0.6rem;">
+            <i class="fa-solid fa-user-graduate" style="color: var(--primary);"></i> Complete Candidate Profile
+          </h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
+            These details will be automatically attached to your job applications and recruiter interviews.
+          </p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('onboardingModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="onboardingProfileForm" onsubmit="saveUserProfile(event)">
+        <div class="modal-body">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="profFullName" class="form-control" placeholder="e.g. Hemant Sharma" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mobile Number *</label>
+              <input type="tel" id="profMobile" class="form-control" placeholder="e.g. +91 9876543210" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Google Email Address *</label>
+            <input type="email" id="profEmail" class="form-control" readonly style="background: var(--bg-subtle); cursor: not-allowed;">
+          </div>
+
+          <!-- Academic Qualification -->
+          <div style="background: var(--bg-subtle); padding: 1.25rem; border-radius: 12px; margin-bottom: 1.25rem; border: 1px solid var(--border-color);">
+            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-main);">
+              <i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i> Higher Qualification Details
+            </h4>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Higher Qualification Degree *</label>
+                <select id="profDegree" class="form-control" required>
+                  <option value="B.Tech / B.E. (Computer Science)">B.Tech / B.E. (Computer Science & IT)</option>
+                  <option value="B.Tech / B.E. (Electronics / Circuital)">B.Tech / B.E. (Electronics / Circuital)</option>
+                  <option value="B.Tech / B.E. (Other Branches)">B.Tech / B.E. (Other Engineering)</option>
+                  <option value="M.Tech / M.E. / MS">M.Tech / M.E. / MS</option>
+                  <option value="MCA (Master of Computer Applications)">MCA</option>
+                  <option value="BCA (Bachelor of Computer Applications)">BCA</option>
+                  <option value="B.Sc / M.Sc (Computer Science / IT)">B.Sc / M.Sc (CS / IT)</option>
+                  <option value="Diploma in Engineering">Diploma in Engineering</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">College / University Name *</label>
+                <input type="text" id="profCollege" class="form-control" placeholder="e.g. Delhi Technological University" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">Branch / Specialization</label>
+                <input type="text" id="profBranch" class="form-control" placeholder="e.g. Computer Engineering">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">Passing Year *</label>
+                <select id="profYear" class="form-control" required>
+                  <option value="2026">2026 Batch</option>
+                  <option value="2025">2025 Batch</option>
+                  <option value="2024">2024 Batch</option>
+                  <option value="2027">2027 Batch (Pre-final)</option>
+                  <option value="2023 or earlier">2023 or earlier</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">CGPA / % Score *</label>
+                <input type="text" id="profCgpa" class="form-control" placeholder="e.g. 8.4 CGPA or 82%" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Professional Links -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label"><i class="fa-brands fa-linkedin" style="color: #0077b5;"></i> LinkedIn Profile URL *</label>
+              <input type="url" id="profLinkedin" class="form-control" placeholder="https://linkedin.com/in/username" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label"><i class="fa-brands fa-github" style="color: var(--text-main);"></i> GitHub Profile URL *</label>
+              <input type="url" id="profGithub" class="form-control" placeholder="https://github.com/username" required>
+            </div>
+          </div>
+
+          <!-- CV / Resume Upload & Link -->
+          <div class="form-group">
+            <label class="form-label"><i class="fa-solid fa-file-pdf" style="color: var(--danger);"></i> Upload CV / Resume *</label>
+            <div class="cv-drop-zone" onclick="document.getElementById('profCvFile').click()">
+              <input type="file" id="profCvFile" accept=".pdf,.doc,.docx" style="display: none;" onchange="handleCvFileSelect(this)">
+              <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+              <div style="font-weight: 600; font-size: 0.95rem;" id="cvDropZoneText">Click to select your CV / Resume (PDF or DOC)</div>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Max file size 10MB</p>
+            </div>
+
+            <div style="margin-top: 0.75rem;">
+              <label class="form-label" style="font-size: 0.8rem; color: var(--text-muted);">Or provide public Google Drive / Hosted CV link:</label>
+              <input type="url" id="profCvLink" class="form-control" placeholder="https://drive.google.com/file/d/your-resume-link/view">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('onboardingModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.5rem;">
+            <i class="fa-solid fa-floppy-disk"></i> Save & Complete Profile
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 9. Settings Modal (Includes Dark/Light Mode & Preferences) -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-content" style="max-width: 550px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="display: flex; align-items: center; gap: 0.6rem;">
+          <i class="fa-solid fa-gear" style="color: var(--primary);"></i> Settings & Preferences
+        </h3>
+        <button class="modal-close-btn" onclick="closeModal('settingsModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Theme Setting -->
+        <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Theme & Appearance</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Choose your preferred display theme for Jobwala.</p>
+
+        <div class="theme-selector-grid">
+          <div class="theme-card-option" id="themeOptDark" onclick="setAppTheme('dark')">
+            <div class="theme-card-preview" style="background: #0b0f19; color: #f8fafc; border: 1px solid #1f293d;">
+              <i class="fa-solid fa-moon"></i>
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem;">Dark Mode</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Sleek & eye-friendly</div>
+            </div>
+          </div>
+
+          <div class="theme-card-option" id="themeOptLight" onclick="setAppTheme('light')">
+            <div class="theme-card-preview" style="background: #f8fafc; color: #0f172a; border: 1px solid #cbd5e1;">
+              <i class="fa-solid fa-sun" style="color: #f59e0b;"></i>
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem;">Light Mode</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Clean & high contrast</div>
+            </div>
+          </div>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+
+        <!-- Notifications & Alerts -->
+        <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Placement Alerts & Notifications</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.75rem;">
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; cursor: pointer;">
+            <div>
+              <div style="font-weight: 600;">New Job Alerts</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Notify when roles matching your profile are posted</div>
+            </div>
+            <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--primary);">
+          </label>
+
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; cursor: pointer;">
+            <div>
+              <div style="font-weight: 600;">Daily DSA Practice Streak</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Reminders to solve daily curated algorithmic problems</div>
+            </div>
+            <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--primary);">
+          </label>
+
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; cursor: pointer;">
+            <div>
+              <div style="font-weight: 600;">Off-Campus Drive Deadlines</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">24-hour advance warning before company applications close</div>
+            </div>
+            <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--primary);">
+          </label>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+
+        <!-- Current User Info -->
+        <div id="settingsAccountArea" style="background: var(--bg-subtle); padding: 1rem; border-radius: 10px; font-size: 0.85rem;">
+          <div style="color: var(--text-muted);">Signed in as:</div>
+          <div style="font-weight: 700; font-size: 0.95rem; margin-top: 0.2rem;" id="settingsUserEmail">Not signed in</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeModal('settingsModal')">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Pro Subscription Modal (More Opportunities) -->
+  <div class="modal-overlay" id="subscriptionModal">
+    <div class="modal-content" style="max-width: 920px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);">
+        <div>
+          <h3 class="modal-title" style="display: flex; align-items: center; gap: 0.6rem; color: #f59e0b;">
+            <i class="fa-solid fa-crown"></i> Jobwala Pro & Placement Accelerator
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+            Unlock exclusive off-campus drive referrals, 1-on-1 mock interviews, and direct recruiter applications.
+          </p>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('subscriptionModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="pricing-grid">
+          <!-- Free Tier -->
+          <div class="pricing-card">
+            <h4 style="font-size: 1.1rem; font-weight: 700;">Jobwala Free</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Standard placement preparation</p>
+            <div class="pricing-price">₹0</div>
+            <ul class="pricing-features">
+              <li><i class="fa-solid fa-check"></i> 100+ Curated DSA Sheet</li>
+              <li><i class="fa-solid fa-check"></i> Standard Job Board</li>
+              <li><i class="fa-solid fa-check"></i> CS Core Subject Notes (OS, DBMS)</li>
+              <li><i class="fa-solid fa-check"></i> Basic Aptitude Cheatsheets</li>
+              <li style="opacity: 0.5;"><i class="fa-solid fa-xmark" style="color: var(--text-dim);"></i> Direct HR Referrals</li>
+              <li style="opacity: 0.5;"><i class="fa-solid fa-xmark" style="color: var(--text-dim);"></i> 1-on-1 Mock Technical Interviews</li>
+            </ul>
+            <button class="btn btn-outline" style="margin-top: auto; width: 100%;" disabled>Current Active Plan</button>
+          </div>
+
+          <!-- Pro Tier -->
+          <div class="pricing-card popular">
+            <span class="pricing-badge-popular">Most Recommended</span>
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: #f59e0b;">Placement Pro</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Fast-track your job offers</p>
+            <div class="pricing-price">₹499 <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">/ month</span></div>
+            <ul class="pricing-features">
+              <li><i class="fa-solid fa-check"></i> <strong>Everything in Free</strong></li>
+              <li><i class="fa-solid fa-check"></i> <strong>Direct HR Referrals</strong> to 25+ partner companies</li>
+              <li><i class="fa-solid fa-check"></i> <strong>Priority Application Tag</strong> (Top of recruiter pile)</li>
+              <li><i class="fa-solid fa-check"></i> <strong>Exclusive Off-Campus Drives</strong> alert 48h before public</li>
+              <li><i class="fa-solid fa-check"></i> <strong>AI ATS Resume Scanner</strong> & Optimization tips</li>
+              <li><i class="fa-solid fa-check"></i> <strong>2 Live Mock Interviews</strong> with FAANG alumni</li>
+            </ul>
+            <button class="btn btn-primary" style="margin-top: auto; width: 100%; background: linear-gradient(135deg, #f59e0b, #d97706); border: none;" onclick="upgradeToPro('Placement Pro (₹499/mo)')">
+              <i class="fa-solid fa-bolt"></i> Upgrade to Pro (₹499)
+            </button>
+          </div>
+
+          <!-- Bootcamp Tier -->
+          <div class="pricing-card">
+            <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--accent);">Career Bootcamp</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Comprehensive placement mentorship</p>
+            <div class="pricing-price">₹1,999 <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">one-time</span></div>
+            <ul class="pricing-features">
+              <li><i class="fa-solid fa-check"></i> <strong>Everything in Placement Pro</strong></li>
+              <li><i class="fa-solid fa-check"></i> <strong>1-on-1 Dedicated Senior Mentor</strong> assigned</li>
+              <li><i class="fa-solid fa-check"></i> <strong>Unlimited Mock Technical & HR Interviews</strong></li>
+              <li><i class="fa-solid fa-check"></i> <strong>Company-Specific Hidden Question Papers</strong></li>
+              <li><i class="fa-solid fa-check"></i> <strong>Guaranteed 5+ Interview Callbacks</strong></li>
+            </ul>
+            <button class="btn btn-primary" style="margin-top: auto; width: 100%; background: var(--accent); border: none;" onclick="upgradeToPro('Career Bootcamp (₹1,999)')">
+              <i class="fa-solid fa-star"></i> Join Bootcamp (₹1,999)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================
+       TOAST CONTAINER
+  ============================================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==============================================
+       FOOTER
+  ============================================== -->
+  <footer class="footer">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <div class="brand-icon" style="width: 28px; height: 28px; font-size: 0.9rem;">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span style="font-weight: 700; color: var(--text-main);">Jobwala Portal</span>
+        <span style="color: var(--text-dim); margin-left: 0.5rem;">&copy; 2026. All rights reserved.</span>
+      </div>
+      <div style="display: flex; gap: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
+        <span><i class="fa-solid fa-check-double" style="color: var(--success);"></i> 100% Verified Placements</span>
+        <span><i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i> Google Sign-In Protected</span>
+        <span><i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Pro Opportunities Available</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DATA & APP SCRIPTS -->
+  <script src="js/data/jobsData.js"></script>
+  <script src="js/data/dsaData.js"></script>
+  <script src="js/data/companiesData.js"></script>
+  <script src="js/data/prepData.js"></script>
+  <script src="js/jobs.js"></script>
+  <script src="js/dsa.js"></script>
+  <script src="js/prep.js"></script>
+  <script src="js/companies.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
